@@ -1,0 +1,37 @@
+# Build
+target/
+out/
+
+# Allure
+allure-results/
+allure-report/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+.factorypath
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.*
+
+# Java
+*.class
