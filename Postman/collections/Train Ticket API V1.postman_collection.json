@@ -57,7 +57,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\":\"user\",\n    \"email\":\"user@trainticket.com\",\n    \"password\":\"User@123\"\n}",
+                  "raw": "{\n    \"name\":\"herman dua\",\n    \"email\":\"hermandua@gmail.com\",\n    \"password\":\"User@123\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -262,7 +262,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\":\"aji\",\n    \"email\":\"hackername@gmail.com\",\n    \"password\":\"Mandiri1herman\"\n}",
+                  "raw": "{\n    \"name\":\"\",\n    \"email\":\"hackername@gmail.com\",\n    \"password\":\"Mandiri1herman\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1602,7 +1602,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Herman Empat\",\n  \"email\": \"hermanempat@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_name\": \"ADMIN\"\n}",
+                  "raw": "{\n  \"name\": \"Herman lagi\",\n  \"email\": \"hermanlago@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_name\": \"ADMIN\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1713,7 +1713,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\":\"herman@gmail.com\",\n  \"password\":\"Mandiri@123\"\n}",
+                  "raw": "{\n  \"email\":\"herman@gmail.com\",\n  \"password\":\"User@123\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2219,7 +2219,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"Ap0010\",\n    \"trainName\": \"Argo Test Sepuluh\"\n}",
+                  "raw": "{\n    \"trainCode\": \"AG00100\",\n    \"trainName\": \"Argo Test Seratus\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2481,20 +2481,22 @@
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
-                      "let response = pm.response.json();",
+                      "const response = pm.response.json();",
                       "",
-                      "pm.test(\"Contains one validation message\", function () {",
-                      "    pm.expect(response.length).to.eql(1);",
+                      "// Response Structure",
+                      "pm.test(\"Response contains trainCode field\", function () {",
+                      "    pm.expect(response).to.have.property(\"trainCode\");",
                       "});",
                       "",
-                      "pm.test(\"Contains trainCode validation message\", function () {",
-                      "    pm.expect(response)",
-                      "        .to.include(\"Train code is required\");",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Train code validation message is correct\", function () {",
+                      "    pm.expect(response.trainCode).to.eql(\"Train code is required\");",
                       "});",
                       "",
-                      "pm.test(\"Does not contain trainName validation message\", function () {",
-                      "    pm.expect(response)",
-                      "        .to.not.include(\"Train name is required\");",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -2647,7 +2649,7 @@
                       "});",
                       "",
                       "pm.test(\"Train name matches request\", function () {",
-                      "    pm.expect(response.trainName).to.eql(requestBody.trainName);",
+                      "    pm.expect(response.trainName).to.eql(requestBody.trainName.trim());",
                       "});",
                       "",
                       "pm.test(\"Status is ACTIVE\", function () {",
@@ -2689,7 +2691,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"123\",\n    \"trainName\": \"Satu Dua Tiga\"\n}",
+                  "raw": "{\n    \"trainCode\": \"23320\",\n    \"trainName\": \" Satu Dua Tiga\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2789,7 +2791,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"APC\",\n    \"trainName\": \"APC Train Name\"\n}",
+                  "raw": "{\n    \"trainCode\": \"APCD\",\n    \"trainName\": \"APC Train Name\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2889,7 +2891,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"abg\",\n    \"trainName\": \"ABG Train Name\"\n}",
+                  "raw": "{\n    \"trainCode\": \"abgc\",\n    \"trainName\": \"ABG Train Name\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2989,7 +2991,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"ABC\",\n    \"trainName\": \" ABC Train Name \"\n}",
+                  "raw": "{\n    \"trainCode\": \"ABCDE\",\n    \"trainName\": \" ABC Train Name \"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3133,7 +3135,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"AP002\",\n    \"trainName\": \"\"\n}",
+                  "raw": "{\n    \"trainCode\": \"AP002\",\n    \"trainName\": \"Train Name\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3205,7 +3207,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"AP002AP002AP002AP002AP002AP002AP002AP002\",\n    \"trainName\": \"Train Name\"\n}",
+                  "raw": "{\n    \"trainCode\": \"AP002AP002AP002AP002AP002AP002AP002AP012\",\n    \"trainName\": \"Train Name Aja\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3277,7 +3279,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"BJR\",\n    \"trainName\": \"Kereta api tututut siapa hendak turun ke bali surabaya ayo jalan jalan jalan ke surabaya yuk sekarangn\"\n}",
+                  "raw": "{\n    \"trainCode\": \"BJR\",\n    \"trainName\": \"Kereta api tututut siapa hendak turun ke bali surabaya ayo jalan jalan jalan ke surabaya yuk sekarangg\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3909,14 +3911,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/12",
+                  "raw": "{{baseUrl}}/api/trains/122729900",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "12"
+                    "122729900"
                   ]
                 }
               },
@@ -3973,14 +3975,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/12",
+                  "raw": "{{baseUrl}}/api/trains/1220200000",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "12"
+                    "1220200000"
                   ]
                 }
               },
@@ -4278,7 +4280,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"AP005\",\n    \"trainName\": \"Argo Test Lima Updated\"\n}",
+                  "raw": "{\n    \"trainCode\": \"AP005\",\n    \"trainName\": \"Argo Test Lima Updated Updated\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5078,13 +5080,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains",
+                  "raw": "{{baseUrl}}/api/trains/1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
-                    "trains"
+                    "trains",
+                    "1"
                   ]
                 }
               },
@@ -5222,14 +5225,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/4",
+                  "raw": "{{baseUrl}}/api/trains/2",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "4"
+                    "2"
                   ]
                 }
               },
@@ -5723,14 +5726,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/4/status",
+                  "raw": "{{baseUrl}}/api/trains/2/status",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "4",
+                    "2",
                     "status"
                   ]
                 }
@@ -5837,14 +5840,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/100/status",
+                  "raw": "{{baseUrl}}/api/trains/1099999990/status",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "100",
+                    "1099999990",
                     "status"
                   ]
                 }
@@ -6200,14 +6203,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/trains/3",
+                  "raw": "{{baseUrl}}/api/trains/1",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "trains",
-                    "3"
+                    "1"
                   ]
                 }
               },
@@ -7000,14 +7003,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/api/stations/12",
+                  "raw": "{{baseUrl}}/api/stations/12102020020",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "stations",
-                    "12"
+                    "12102020020"
                   ]
                 }
               },
@@ -7075,14 +7078,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/api/stations/12",
+                  "raw": "{{baseUrl}}/api/stations/12292902020",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "stations",
-                    "12"
+                    "12292902020"
                   ]
                 }
               },
@@ -9272,14 +9275,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/stations/100",
+                  "raw": "{{baseUrl}}/api/stations/100000999",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "stations",
-                    "100"
+                    "100000999"
                   ]
                 }
               },
@@ -10726,14 +10729,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/stations/100/status",
+                  "raw": "{{baseUrl}}/api/stations/128299292900/status",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "stations",
-                    "100",
+                    "128299292900",
                     "status"
                   ]
                 }
@@ -12466,7 +12469,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainId\": 5,\n    \"originStationId\": 1,\n    \"destinationStationId\": 2,\n    \"departureTime\": \"2027-11-07T06:00:00\",\n    \"arrivalTime\": \"2027-11-07T10:30:00\",\n    \"price\": 250000\n}",
+                  "raw": "{\n    \"trainId\": 5,\n    \"originStationId\": 3,\n    \"destinationStationId\": 2,\n    \"departureTime\": \"2027-11-07T06:00:00\",\n    \"arrivalTime\": \"2027-11-07T10:30:00\",\n    \"price\": 250000\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -13120,13 +13123,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
                       "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "    pm.expect(response.message).to.eql(\"Origin and destination stations cannot be the same\");",
                       "});",
                       "",
                       "// Performance",
@@ -13191,13 +13194,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
                       "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "    pm.expect(response.message).to.eql(\"Arrival time must be after departure time\");",
                       "});",
                       "",
                       "// Performance",
@@ -13262,13 +13265,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"departureTime\");",
                       "});",
                       "",
                       "// Data Validation",
                       "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "    pm.expect(response.departureTime).to.eql(\"Departure time must be in the future\");",
                       "});",
                       "",
                       "// Performance",
@@ -13297,7 +13300,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainId\": \"6\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2025-07-08T09:00:00\",\n    \"arrivalTime\": \"2026-07-08T08:00:00\",\n    \"price\":\"1000000\"\n}",
+                  "raw": "{\n    \"trainId\": \"6\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2025-07-08T09:00:00\",\n    \"arrivalTime\": \"2026-11-08T08:00:00\",\n    \"price\":\"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -13333,13 +13336,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
-                      "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "pm.test(\"Arrival time validation message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Arrival time must be after departure time\");",
                       "});",
                       "",
                       "// Performance",
@@ -13368,7 +13371,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainId\": \"6\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2025-11-08T09:00:00\",\n    \"arrivalTime\": \"2026-11-08T09:00:00\",\n    \"price\":\"1000000\"\n}",
+                  "raw": "{\n    \"trainId\": \"6\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2026-11-08T09:00:00\",\n    \"arrivalTime\": \"2026-11-08T09:00:00\",\n    \"price\":\"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
