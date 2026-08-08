@@ -256,15 +256,21 @@ Verify schedule status in database
 
 # 🚀 Future Improvements
 
-- Dockerized test execution
-- GitHub Actions CI/CD pipeline
-- Multiple environment support (DEV / QA / STAGING)
-- Test tagging (Smoke / Regression / Sanity)
-- Parallel test execution
-- Automatic test data cleanup
-- Extract duplicated setup into `helper`
-- Move shared request DTOs into a dedicated package
-- Extract reusable response assertions
+## CI/CD
+- [ ] Configure GitHub Actions to automatically build the backend, execute API automation tests, and publish test artifacts on every push.
+
+## Test Automation
+- [ ] Refactor common API helpers into reusable utility classes.
+- [ ] Add support for test execution by tags (Smoke, Regression, Sanity).
+- [ ] Improve Allure reports with custom attachments and environment details.
+
+## Postman
+- [ ] Convert static request payloads to dynamic variables and pre-request scripts.
+- [ ] Support full collection execution without manual data updates.
+
+## Backend
+- [ ] Add Docker Compose for one-command local setup.
+- [ ] Expand API coverage with Ticket Booking, Payment, and Seat Reservation modules.
 
 ---
 
