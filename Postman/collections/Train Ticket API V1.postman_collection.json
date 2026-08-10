@@ -25,8 +25,7 @@
                       "    pm.response.to.have.status(201);",
                       "});",
                       "",
-                      "// Parse Request & Response",
-                      "const requestBody = JSON.parse(pm.request.body.raw);",
+                      "// Parse Response",
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
@@ -34,17 +33,23 @@
                       "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
-                      "// Data Validation",
-                      "pm.test(\"Message is not empty\", function () {",
-                      "    pm.expect(response.message).to.be.a(\"string\");",
-                      "    pm.expect(response.message).to.not.be.empty;",
+                      "// Business Validation",
+                      "pm.test(\"Error message displayed\", function () {",
+                      "    pm.expect(pm.response.text())",
+                      "        .to.include(\"Register success\");",
                       "});",
                       "",
                       "// Performance",
                       "pm.test(\"Response time is less than 1000 ms\", function () {",
                       "    pm.expect(pm.response.responseTime).to.be.below(1000);",
                       "});",
-                      ""
+                      "",
+                      "// Mengambil data yang dikirim di Body Request Register",
+                      "const requestBody = JSON.parse(pm.request.body.raw);",
+                      "",
+                      "// Menyimpannya ke Environment Variables agar bisa dipakai oleh Request Login",
+                      "pm.environment.set(\"registeredEmail\", requestBody.email);",
+                      "pm.environment.set(\"registeredPassword\", requestBody.password);"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -57,7 +62,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\":\"herman dua\",\n    \"email\":\"hermandua@gmail.com\",\n    \"password\":\"User@123\"\n}",
+                  "raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{$randomPassword}}Aa1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -120,7 +125,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Andrey\",\n  \"email\": \"andrey@gmail.com\",\n  \"password\": \"Mandiri1\"\n}",
+                  "raw": "{\n  \"name\": \"Andrey\",\n  \"email\": \"{{registeredEmail}}\",\n  \"password\": \"Mandiri1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1137,7 +1142,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\":\"Herman\",\n    \"email\":\"hackername@gmail.com\",\n    \"password\":\"her12ma\"\n}",
+                  "raw": "{\n    \"name\":\"{{$randomFullName}}\",\n    \"email\":\"{{$randomEmail}}\",\n    \"password\":\"her12ma\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1602,7 +1607,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Herman lagi\",\n  \"email\": \"hermanlago@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_name\": \"ADMIN\"\n}",
+                  "raw": "{\n  \"name\": \"Herman lagi\",\n  \"email\": \"hermanlagi@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_name\": \"ADMIN\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1625,12 +1630,49 @@
             },
             {
               "name": "TC-REG-025 Register - Privilege Escalation (role_id = 1)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Business Validation",
+                      "pm.test(\"Error message displayed\", function () {",
+                      "    pm.expect(pm.response.text())",
+                      "        .to.include(\"Register success\");",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
               "request": {
                 "method": "POST",
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Andrey Dua\",\n  \"email\": \"andreydua@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_id\": \"1\"\n}",
+                  "raw": "{\n  \"name\": \"Andrey Dua\",\n  \"email\": \"andreyduatiga@gmail.com\",\n  \"password\": \"Mandiri1\",\n  \"role_id\": \"1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1713,7 +1755,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\":\"herman@gmail.com\",\n  \"password\":\"User@123\"\n}",
+                  "raw": "{\n  \"email\":\"{{registeredEmail}}\",\n  \"password\":\"{{registeredPassword}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1791,7 +1833,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\":\"admin@trainticket.com\",\n  \"password\":\"Admin@123\"\n}",
+                  "raw": "{\n  \"email\":\"{{adminEmail}}\",\n  \"password\":\"{{adminPassword}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2202,6 +2244,17 @@
                     "packages": {},
                     "requests": {}
                   }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
                 }
               ],
               "request": {
@@ -2219,7 +2272,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainCode\": \"AG00100\",\n    \"trainName\": \"Argo Test Seratus\"\n}",
+                  "raw": "{\n    \"trainCode\": \"{{$randomTrainCode}}\",\n    \"trainName\": \"{{$randomTrainName}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7351,10 +7404,41 @@
                       "    pm.expect(pm.response.responseTime).to.be.below(1000);",
                       "});",
                       "",
+                      "pm.environment.set(\"stationId\", response.id);",
+                      "",
+                      "pm.environment.set(\"originStationId\", response.id);",
+                      "pm.environment.set(\"destinationStationId\", response.id);",
+                      "",
                       "// Save Environment Variables",
                       "//pm.environment.set(\"newTrainId\", response.id);",
                       "//pm.environment.set(\"stationCode\", response.stationCode);",
                       "//pm.environment.set(\"stationName\", response.stationName);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const id = Date.now();",
+                      "",
+                      "pm.variables.set(",
+                      "    \"stationCode\",",
+                      "    \"ST\" + id.toString().slice(-5)",
+                      ");",
+                      "",
+                      "pm.variables.set(",
+                      "    \"stationName\",",
+                      "    \"Automation Station \" + id",
+                      ");",
+                      "",
+                      "pm.variables.set(",
+                      "    \"city\",",
+                      "    \"Jakarta\"",
+                      ");"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -7377,7 +7461,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stationCode\": \"pwl\",\n    \"stationName\": \"Purwajakarta l\",\n    \"city\": \"SUBANG\"\n}",
+                  "raw": "{\n    \"stationCode\":\"{{stationCode}}\",\n    \"stationName\":\"{{stationName}}\",\n    \"city\":\"{{city}}\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -11543,796 +11627,6 @@
       "name": "Schedules",
       "item": [
         {
-          "name": "GET",
-          "item": [
-            {
-              "name": "TC-SCH-GET-001 GET Schedules - ADMIN",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "// Test Precondition: Ensure this scenario is executed using ADMIN credentials",
-                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
-                      "",
-                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
-                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
-                      "    pm.expect(bearer).to.not.be.undefined;",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response is an array\", function () {",
-                      "    pm.expect(response).to.be.an(\"array\");",
-                      "});",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Schedule object contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"train\",",
-                      "        \"originStation\",",
-                      "        \"destinationStation\",",
-                      "        \"departureTime\",",
-                      "        \"arrivalTime\",",
-                      "        \"price\",",
-                      "        \"status\",",
-                      "        \"createdAt\",",
-                      "        \"updatedAt\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response[0]).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Response contains at least one schedule\", function () {",
-                      "    pm.expect(response.length).to.be.above(0);",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-SCH-GET-002 GET Schedules - USER",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response is an array\", function () {",
-                      "    pm.expect(response).to.be.an(\"array\");",
-                      "});",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Schedule object contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"train\",",
-                      "        \"originStation\",",
-                      "        \"destinationStation\",",
-                      "        \"departureTime\",",
-                      "        \"arrivalTime\",",
-                      "        \"price\",",
-                      "        \"status\",",
-                      "        \"createdAt\",",
-                      "        \"updatedAt\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response[0]).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Response contains at least one schedule\", function () {",
-                      "    pm.expect(response.length).to.be.above(0);",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{userToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-SCH-GET-003 GET Schedules by Id - ADMIN",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "// Test Precondition: Ensure this scenario is executed using ADMIN credentials",
-                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
-                      "",
-                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
-                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
-                      "    pm.expect(bearer).to.not.be.undefined;",
-                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"adminToken\"));",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains required fields\", function () {",
-                      "",
-                      "    [\"id\", \"stationCode\", \"stationName\", \"createdAt\", \"updatedAt\"]",
-                      "        .forEach(field => {",
-                      "            pm.expect(response).to.have.property(field);",
-                      "        });",
-                      "",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Train code matches response\", function () {",
-                      "    pm.expect(response.stationCode)",
-                      "        .to.eql(response.stationCode);",
-                      "});",
-                      "",
-                      "pm.test(\"Train name matches response\", function () {",
-                      "    pm.expect(response.stationName).to.eql(response.stationName);",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});",
-                      ""
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules/1000",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules",
-                    "1000"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-SCH-GET-004 GET Schedules by Id - USER",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "// Test Precondition: Ensure this scenario is executed using USER credentials",
-                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
-                      "",
-                      "pm.test(\"Precondition: Request uses USER token\", function () {",
-                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
-                      "    pm.expect(bearer).to.not.be.undefined;",
-                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"userToken\"));",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"train\",",
-                      "        \"originStation\",",
-                      "        \"destinationStation\",",
-                      "        \"departureTime\",",
-                      "        \"arrivalTime\",",
-                      "        \"price\",",
-                      "        \"status\",",
-                      "        \"createdAt\",",
-                      "        \"updatedAt\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "pm.test(\"Train object contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"trainCode\",",
-                      "        \"trainName\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response.train).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "pm.test(\"Origin station object contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"stationCode\",",
-                      "        \"stationName\",",
-                      "        \"city\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response.originStation).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "pm.test(\"Destination station object contains required fields\", function () {",
-                      "",
-                      "    [",
-                      "        \"id\",",
-                      "        \"stationCode\",",
-                      "        \"stationName\",",
-                      "        \"city\"",
-                      "    ].forEach(field => {",
-                      "        pm.expect(response.destinationStation).to.have.property(field);",
-                      "    });",
-                      "",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Schedule status is valid\", function () {",
-                      "    pm.expect([\"ACTIVE\", \"INACTIVE\"]).to.include(response.status);",
-                      "});",
-                      "",
-                      "pm.test(\"Price is greater than zero\", function () {",
-                      "    pm.expect(response.price).to.be.above(0);",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{userToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules/1",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules",
-                    "1"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-SCH-GET-005 GET Schedules by Id - Not Found - ADMIN",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "//Status Code",
-                      "pm.test(\"Status code is 404\", function () {",
-                      "    pm.response.to.have.status(404);",
-                      "});",
-                      "",
-                      "// Test Precondition: Ensure this request uses ADMIN credentials",
-                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
-                      "",
-                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
-                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
-                      "    pm.expect(bearer).to.not.be.undefined;",
-                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"adminToken\"));",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains message\", function () {",
-                      "    pm.expect(response).to.have.property(\"message\");",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Message is not empty\", function () {",
-                      "    pm.expect(response.message).to.be.a(\"string\");",
-                      "    pm.expect(response.message).to.not.be.empty;",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{adminToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules/120000",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules",
-                    "120000"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-SCH-GET-006 GET Schedules by Id - Not Found - USER",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "//Status Code",
-                      "pm.test(\"Status code is 404\", function () {",
-                      "    pm.response.to.have.status(404);",
-                      "});",
-                      "",
-                      "// Test Precondition: Ensure this request uses USER credentials",
-                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
-                      "",
-                      "pm.test(\"Precondition: Request uses USER token\", function () {",
-                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
-                      "    pm.expect(bearer).to.not.be.undefined;",
-                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"userToken\"));",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains message\", function () {",
-                      "    pm.expect(response).to.have.property(\"message\");",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Message is not empty\", function () {",
-                      "    pm.expect(response.message).to.be.a(\"string\");",
-                      "    pm.expect(response.message).to.not.be.empty;",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{userToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules/1210000",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules",
-                    "1210000"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-STA-GET-007 GET Schedules - Unauthorized Access - Without Token",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 401\", function () {",
-                      "    pm.response.to.have.status(401);",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains message field\", function () {",
-                      "    pm.expect(response).to.have.property(\"message\");",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Authentication error message is correct\", function () {",
-                      "    pm.expect(response.message).to.eql(\"Authentication required\");",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-STA-GET-008 GET Schedules - Unauthorized Access - Invalid Token",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 401\", function () {",
-                      "    pm.response.to.have.status(401);",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains message field\", function () {",
-                      "    pm.expect(response).to.have.property(\"message\");",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Invalid token error message is correct\", function () {",
-                      "    pm.expect(response.message).to.eql(\"Invalid or expired token\");",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{invalidToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "TC-STA-GET-009 GET Schedules - Unauthorized Access - Expired Token",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 401\", function () {",
-                      "    pm.response.to.have.status(401);",
-                      "});",
-                      "",
-                      "// Parse Response",
-                      "const response = pm.response.json();",
-                      "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains message field\", function () {",
-                      "    pm.expect(response).to.have.property(\"message\");",
-                      "});",
-                      "",
-                      "// Data Validation",
-                      "pm.test(\"Expired token error message is correct\", function () {",
-                      "    pm.expect(response.message).to.eql(\"Invalid or expired token\");",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{expiredToken}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/schedules",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "schedules"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
           "name": "POST",
           "item": [
             {
@@ -12342,111 +11636,31 @@
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "// Status Code",
-                      "pm.test(\"Status code is 201\", function () {",
-                      "    pm.response.to.have.status(201);",
-                      "});",
+                      "const departure = new Date();",
                       "",
-                      "// Parse Response and Request Body",
-                      "const response = pm.response.json();",
-                      "const requestBody = JSON.parse(pm.request.body.raw);",
+                      "departure.setDate(departure.getDate()+1);",
                       "",
-                      "// Response Structure",
-                      "pm.test(\"Response contains required schedule fields\", function () {",
-                      "    pm.expect(response).to.have.property(\"id\");",
-                      "    pm.expect(response).to.have.property(\"train\");",
-                      "    pm.expect(response).to.have.property(\"originStation\");",
-                      "    pm.expect(response).to.have.property(\"destinationStation\");",
-                      "    pm.expect(response).to.have.property(\"departureTime\");",
-                      "    pm.expect(response).to.have.property(\"arrivalTime\");",
-                      "    pm.expect(response).to.have.property(\"price\");",
-                      "    pm.expect(response).to.have.property(\"status\");",
-                      "    pm.expect(response).to.have.property(\"createdAt\");",
-                      "    pm.expect(response).to.have.property(\"updatedAt\");",
-                      "});",
+                      "const arrival = new Date(departure);",
                       "",
-                      "pm.test(\"Train object contains required fields\", function () {",
-                      "    pm.expect(response.train).to.have.property(\"id\");",
-                      "    pm.expect(response.train).to.have.property(\"trainCode\");",
-                      "    pm.expect(response.train).to.have.property(\"trainName\");",
-                      "});",
+                      "arrival.setHours(arrival.getHours()+3);",
                       "",
-                      "pm.test(\"Origin station object contains required fields\", function () {",
-                      "    pm.expect(response.originStation).to.have.property(\"id\");",
-                      "    pm.expect(response.originStation).to.have.property(\"stationCode\");",
-                      "    pm.expect(response.originStation).to.have.property(\"stationName\");",
-                      "    pm.expect(response.originStation).to.have.property(\"city\");",
-                      "});",
+                      "function format(date){",
+                      "    return date.toISOString().slice(0,19);",
+                      "}",
                       "",
-                      "pm.test(\"Destination station object contains required fields\", function () {",
-                      "    pm.expect(response.destinationStation).to.have.property(\"id\");",
-                      "    pm.expect(response.destinationStation).to.have.property(\"stationCode\");",
-                      "    pm.expect(response.destinationStation).to.have.property(\"stationName\");",
-                      "    pm.expect(response.destinationStation).to.have.property(\"city\");",
-                      "});",
+                      "pm.variables.set(",
+                      "    \"departureTime\",",
+                      "    format(departure)",
+                      ");",
                       "",
-                      "// Data Validation",
-                      "pm.test(\"Schedule ID is valid\", function () {",
-                      "    pm.expect(response.id).to.be.a(\"number\");",
-                      "    pm.expect(response.id).to.be.above(0);",
-                      "});",
+                      "pm.variables.set(",
+                      "    \"arrivalTime\",",
+                      "    format(arrival)",
+                      ");",
                       "",
-                      "pm.test(\"Train ID matches request\", function () {",
-                      "    pm.expect(response.train.id)",
-                      "        .to.eql(Number(requestBody.trainId));",
-                      "});",
-                      "",
-                      "pm.test(\"Origin station ID matches request\", function () {",
-                      "    pm.expect(response.originStation.id)",
-                      "        .to.eql(Number(requestBody.originStationId));",
-                      "});",
-                      "",
-                      "pm.test(\"Destination station ID matches request\", function () {",
-                      "    pm.expect(response.destinationStation.id)",
-                      "        .to.eql(Number(requestBody.destinationStationId));",
-                      "});",
-                      "",
-                      "pm.test(\"Departure time matches request\", function () {",
-                      "    pm.expect(response.departureTime)",
-                      "        .to.eql(requestBody.departureTime);",
-                      "});",
-                      "",
-                      "pm.test(\"Arrival time matches request\", function () {",
-                      "    pm.expect(response.arrivalTime)",
-                      "        .to.eql(requestBody.arrivalTime);",
-                      "});",
-                      "",
-                      "pm.test(\"Price matches request\", function () {",
-                      "    pm.expect(Number(response.price))",
-                      "        .to.eql(Number(requestBody.price));",
-                      "});",
-                      "",
-                      "// Business Validation",
-                      "pm.test(\"Schedule status is ACTIVE by default\", function () {",
-                      "    pm.expect(response.status).to.eql(\"ACTIVE\");",
-                      "});",
-                      "",
-                      "pm.test(\"Arrival time is after departure time\", function () {",
-                      "    const departureTime = new Date(response.departureTime);",
-                      "    const arrivalTime = new Date(response.arrivalTime);",
-                      "",
-                      "    pm.expect(arrivalTime.getTime())",
-                      "        .to.be.above(departureTime.getTime());",
-                      "});",
-                      "",
-                      "// Timestamp Validation",
-                      "pm.test(\"Created and updated timestamps are valid\", function () {",
-                      "    pm.expect(response.createdAt).to.be.a(\"string\");",
-                      "    pm.expect(response.createdAt).to.not.be.empty;",
-                      "",
-                      "    pm.expect(response.updatedAt).to.be.a(\"string\");",
-                      "    pm.expect(response.updatedAt).to.not.be.empty;",
-                      "});",
-                      "",
-                      "// Performance",
-                      "pm.test(\"Response time is less than 1000 ms\", function () {",
-                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
-                      "});"
+                      "pm.variables.set(",
+                      "    \"price\",",
+                      "    150000);"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -12469,7 +11683,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainId\": 5,\n    \"originStationId\": 3,\n    \"destinationStationId\": 2,\n    \"departureTime\": \"2027-11-07T06:00:00\",\n    \"arrivalTime\": \"2027-11-07T10:30:00\",\n    \"price\": 250000\n}",
+                  "raw": "{\n    \"trainId\": {{trainId}},\n    \"originStationId\": {{originStationId}},\n    \"destinationStationId\": {{destinationStationId}},\n    \"departureTime\":\"{{departureTime}}\",\n    \"arrivalTime\":\"{{arrivalTime}}\",\n    \"price\":{{price}}\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -13516,7 +12730,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"trainId\": \"100\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2026-11-08T09:00:00\",\n    \"arrivalTime\": \"2026-11-08T10:00:00\",\n    \"price\":\"1500000\"\n}",
+                  "raw": "{\n    \"trainId\": \"9999999999\",\n    \"originStationId\":\"2\" ,\n    \"destinationStationId\": \"3\",\n    \"departureTime\": \"2026-11-08T09:00:00\",\n    \"arrivalTime\": \"2026-11-08T10:00:00\",\n    \"price\":\"1500000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -14467,6 +13681,796 @@
           ]
         },
         {
+          "name": "GET",
+          "item": [
+            {
+              "name": "TC-SCH-GET-001 GET Schedules - ADMIN",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "// Test Precondition: Ensure this scenario is executed using ADMIN credentials",
+                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
+                      "",
+                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
+                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
+                      "    pm.expect(bearer).to.not.be.undefined;",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response is an array\", function () {",
+                      "    pm.expect(response).to.be.an(\"array\");",
+                      "});",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Schedule object contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"train\",",
+                      "        \"originStation\",",
+                      "        \"destinationStation\",",
+                      "        \"departureTime\",",
+                      "        \"arrivalTime\",",
+                      "        \"price\",",
+                      "        \"status\",",
+                      "        \"createdAt\",",
+                      "        \"updatedAt\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response[0]).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Response contains at least one schedule\", function () {",
+                      "    pm.expect(response.length).to.be.above(0);",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-SCH-GET-002 GET Schedules - USER",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response is an array\", function () {",
+                      "    pm.expect(response).to.be.an(\"array\");",
+                      "});",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Schedule object contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"train\",",
+                      "        \"originStation\",",
+                      "        \"destinationStation\",",
+                      "        \"departureTime\",",
+                      "        \"arrivalTime\",",
+                      "        \"price\",",
+                      "        \"status\",",
+                      "        \"createdAt\",",
+                      "        \"updatedAt\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response[0]).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Response contains at least one schedule\", function () {",
+                      "    pm.expect(response.length).to.be.above(0);",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{userToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-SCH-GET-003 GET Schedules by Id - ADMIN",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "// Test Precondition: Ensure this scenario is executed using ADMIN credentials",
+                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
+                      "",
+                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
+                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
+                      "    pm.expect(bearer).to.not.be.undefined;",
+                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"adminToken\"));",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains required fields\", function () {",
+                      "",
+                      "    [\"id\", \"stationCode\", \"stationName\", \"createdAt\", \"updatedAt\"]",
+                      "        .forEach(field => {",
+                      "            pm.expect(response).to.have.property(field);",
+                      "        });",
+                      "",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Train code matches response\", function () {",
+                      "    pm.expect(response.stationCode)",
+                      "        .to.eql(response.stationCode);",
+                      "});",
+                      "",
+                      "pm.test(\"Train name matches response\", function () {",
+                      "    pm.expect(response.stationName).to.eql(response.stationName);",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules/1000",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules",
+                    "1000"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-SCH-GET-004 GET Schedules by Id - USER",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "// Test Precondition: Ensure this scenario is executed using USER credentials",
+                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
+                      "",
+                      "pm.test(\"Precondition: Request uses USER token\", function () {",
+                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
+                      "    pm.expect(bearer).to.not.be.undefined;",
+                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"userToken\"));",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"train\",",
+                      "        \"originStation\",",
+                      "        \"destinationStation\",",
+                      "        \"departureTime\",",
+                      "        \"arrivalTime\",",
+                      "        \"price\",",
+                      "        \"status\",",
+                      "        \"createdAt\",",
+                      "        \"updatedAt\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "pm.test(\"Train object contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"trainCode\",",
+                      "        \"trainName\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response.train).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "pm.test(\"Origin station object contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"stationCode\",",
+                      "        \"stationName\",",
+                      "        \"city\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response.originStation).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "pm.test(\"Destination station object contains required fields\", function () {",
+                      "",
+                      "    [",
+                      "        \"id\",",
+                      "        \"stationCode\",",
+                      "        \"stationName\",",
+                      "        \"city\"",
+                      "    ].forEach(field => {",
+                      "        pm.expect(response.destinationStation).to.have.property(field);",
+                      "    });",
+                      "",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Schedule status is valid\", function () {",
+                      "    pm.expect([\"ACTIVE\", \"INACTIVE\"]).to.include(response.status);",
+                      "});",
+                      "",
+                      "pm.test(\"Price is greater than zero\", function () {",
+                      "    pm.expect(response.price).to.be.above(0);",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{userToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules/1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-SCH-GET-005 GET Schedules by Id - Not Found - ADMIN",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "//Status Code",
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      "// Test Precondition: Ensure this request uses ADMIN credentials",
+                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
+                      "",
+                      "pm.test(\"Precondition: Request uses ADMIN token\", function () {",
+                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
+                      "    pm.expect(bearer).to.not.be.undefined;",
+                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"adminToken\"));",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Message is not empty\", function () {",
+                      "    pm.expect(response.message).to.be.a(\"string\");",
+                      "    pm.expect(response.message).to.not.be.empty;",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{adminToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules/120000",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules",
+                    "120000"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-SCH-GET-006 GET Schedules by Id - Not Found - USER",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "//Status Code",
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      "// Test Precondition: Ensure this request uses USER credentials",
+                      "const bearer = pm.request.auth.bearer.find(item => item.key === \"token\");",
+                      "",
+                      "pm.test(\"Precondition: Request uses USER token\", function () {",
+                      "    pm.expect(pm.request.auth.type).to.eql(\"bearer\");",
+                      "    pm.expect(bearer).to.not.be.undefined;",
+                      "    pm.expect(bearer.value).to.eql(pm.environment.get(\"userToken\"));",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Message is not empty\", function () {",
+                      "    pm.expect(response.message).to.be.a(\"string\");",
+                      "    pm.expect(response.message).to.not.be.empty;",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{userToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules/1210000",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules",
+                    "1210000"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-STA-GET-007 GET Schedules - Unauthorized Access - Without Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 401\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message field\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Authentication error message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Authentication required\");",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-STA-GET-008 GET Schedules - Unauthorized Access - Invalid Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 401\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message field\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Invalid token error message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Invalid or expired token\");",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{invalidToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-STA-GET-009 GET Schedules - Unauthorized Access - Expired Token",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Status Code",
+                      "pm.test(\"Status code is 401\", function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});",
+                      "",
+                      "// Parse Response",
+                      "const response = pm.response.json();",
+                      "",
+                      "// Response Structure",
+                      "pm.test(\"Response contains message field\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
+                      "});",
+                      "",
+                      "// Data Validation",
+                      "pm.test(\"Expired token error message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Invalid or expired token\");",
+                      "});",
+                      "",
+                      "// Performance",
+                      "pm.test(\"Response time is less than 1000 ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{expiredToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/schedules",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "schedules"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
           "name": "PUT",
           "item": [
             {
@@ -15334,13 +15338,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains error message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
-                      "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "pm.test(\"Validation message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Arrival time must be after departure time\");",
                       "});",
                       "",
                       "// Performance",
@@ -15377,14 +15381,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/schedules/1",
+                  "raw": "{{baseUrl}}/api/schedules/2",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "schedules",
-                    "1"
+                    "2"
                   ]
                 }
               },
@@ -15406,13 +15410,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains error message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
-                      "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "pm.test(\"message validation message is correct\", function () {",
+                      "    pm.expect(response.departureTime).to.eql(\"Departure time must be in the future\");",
                       "});",
                       "",
                       "// Performance",
@@ -15478,13 +15482,13 @@
                       "const response = pm.response.json();",
                       "",
                       "// Response Structure",
-                      "pm.test(\"Response contains price field\", function () {",
-                      "    pm.expect(response).to.have.property(\"price\");",
+                      "pm.test(\"Response contains error message\", function () {",
+                      "    pm.expect(response).to.have.property(\"message\");",
                       "});",
                       "",
                       "// Data Validation",
-                      "pm.test(\"price validation message is correct\", function () {",
-                      "    pm.expect(response.price).to.eql(\"Price is required\");",
+                      "pm.test(\"Validation message is correct\", function () {",
+                      "    pm.expect(response.message).to.eql(\"Arrival time must be after departure time\");",
                       "});",
                       "",
                       "// Performance",
@@ -15521,14 +15525,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/schedules/1",
+                  "raw": "{{baseUrl}}/api/schedules/2",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "api",
                     "schedules",
-                    "1"
+                    "2"
                   ]
                 }
               },
